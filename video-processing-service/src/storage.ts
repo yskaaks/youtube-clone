@@ -5,8 +5,8 @@ import ffmpeg from 'fluent-ffmpeg';
 
 const storage = new Storage();
 
-const rawVideoBucketName = "yskak-random-videos";
-const processedVideoBucketName = "yskak-random-processed-videos";
+const rawVideoBucketName = "yskak-raw-videos";
+const processedVideoBucketName = "yskak-processed-videos";
 
 const localRawVideoPath = "./raw-videos";
 const localProcessedVideoPath = "./processed-videos";
@@ -28,7 +28,7 @@ export function setupDirectories() {
 export function convertVideo(rawVideoName: string, processedVideoName: string) {
   return new Promise<void>((resolve, reject) => {
     ffmpeg(`${localRawVideoPath}/${rawVideoName}`)
-      .outputOptions("-vf", "scale=640:360")
+      .outputOptions('-vf', 'scale=-1:360,  pad=ceil(iw/2)*2:ceil(ih/2)*2') // 360p
       .on("end", function () {
         console.log("Processing finished successfully");
         resolve();
@@ -48,12 +48,15 @@ export function convertVideo(rawVideoName: string, processedVideoName: string) {
  * @returns A promise that resolves when the file has been downloaded.
  */
 export async function downloadRawVideo(fileName: string) {
-    await storage.bucket(rawVideoBucketName).file(fileName).download({
-        destination: `${localRawVideoPath}/${fileName}`,
+  await storage.bucket(rawVideoBucketName)
+    .file(fileName)
+    .download({
+      destination: `${localRawVideoPath}/${fileName}`,
     });
-    console.log(
-        `gs://${rawVideoBucketName}/${fileName} downloaded to ${localRawVideoPath}/${fileName}.`
-    );
+
+  console.log(
+    `gs://${rawVideoBucketName}/${fileName} downloaded to ${localRawVideoPath}/${fileName}.`
+  );
 }
 
 
