@@ -125,6 +125,10 @@
   }
 }
 
+.thumbnail {
+  margin: 10px;
+}
+
 /* Mobile */
 @media (max-width: 700px) {
   .content {
