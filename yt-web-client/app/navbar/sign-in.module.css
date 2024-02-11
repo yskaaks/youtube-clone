@@ -8,8 +8,12 @@
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    }
+    
+.signin:active {
+    transform: scale(0.95);
 }
-
 .signin:hover {
     background-color: #bee0fd;
     border: 1px solid transparent;

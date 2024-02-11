@@ -20,6 +20,9 @@
     cursor: pointer;
     font-size: 10px;
     padding: 0.4em;
+    background-color: #f8f8f8;
+    margin-right: 1em;
+    transition: background-color 0.3s;
 }
 
 .uploadButton:hover {

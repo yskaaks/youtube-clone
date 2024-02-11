@@ -34,7 +34,10 @@ function NavBar() {
       {
         user && <Upload />
       }
-      <SignIn user={user} />
+      <div className={styles.rightNav}>
+        {/* <SearchBar /> You would need to create this component */}
+        <SignIn user={user} />
+      </div>
     </nav>
   );
 }
